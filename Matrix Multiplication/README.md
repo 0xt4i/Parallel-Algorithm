@@ -17,11 +17,11 @@ fuction matrix_multiply(A,B):
     In parallel for i = 1,2,...,n do:
         In parallel for j = 1,2,...,n do:
             for k = 1,2,...,n do:
-                temp[k] = X[i][k] * Y[k][j];
-            Z[i][j] = reduce(temp,N)
+                temp[k] = A[i][k] * B[k][j];
+            C[i][j] = reduce(temp,N)
 
-fuction reduce(C,N):
-    if n==1 return C[0];
+fuction reduce(D,N):
+    if n==1 return D[0];
     In parallel:
         L = reduce(C, n/2);
         R = reduce(C + n/2, n-n/2);
