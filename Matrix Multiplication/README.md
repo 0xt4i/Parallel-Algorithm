@@ -1,6 +1,5 @@
 # ALGORITHM PARALLEL MATRIX MULTIPLICATION
-
-Main idea: To perform parallel multiplication of two square matrices A and B, each matrix is divided into four equal submatrices. The recursive multiplication tasks are distributed across different processors. The resulting matrix 𝐶 is then assembled based on the following formula:
+Main idea: To perform parallel multiplication of two square matrices A and B , each matrix is divided into four equal submatrices. The recursive multiplication tasks are distributed across different processors. The resulting matrix 𝐶 is then assembled based on the following formula:
 
 $$
 \begin{aligned}
@@ -17,11 +16,11 @@ fuction matrix_multiply(A,B):
     In parallel for i = 1,2,...,n do:
         In parallel for j = 1,2,...,n do:
             for k = 1,2,...,n do:
-                temp[k] = A[i][k] * B[k][j];
-            C[i][j] = reduce(temp,N)
+                temp[k] = X[i][k] * Y[k][j];
+            Z[i][j] = reduce(temp,N)
 
-fuction reduce(D,N):
-    if n==1 return D[0];
+fuction reduce(C,N):
+    if n==1 return C[0];
     In parallel:
         L = reduce(C, n/2);
         R = reduce(C + n/2, n-n/2);
@@ -35,9 +34,7 @@ Explain:
 
 # EXAMPLE
 ![alt](./image.png)
-
-And compute 8 submatrix products recursively
-
+And compute 8 submatrix product recursively
 $$
 \begin{aligned}
     &Z_{11} = X_{11}Y_{11} + X_{12}Y_{21} \\
@@ -46,12 +43,7 @@ $$
     &Z_{22} = X_{21}Y_{12} + X_{22}Y_{21}
 \end{aligned}
 $$
-
 ![alt](./image2.png)
-
-
-
-
 
 Explain:
 - Each value in column i of matrix A (with i ranging from 0 to n) is multiplied with the corresponding cell in row j of matrix B (with j ranging from 0 to n). Each such multiplication is assigned to a different processor to ensure independent processing.
@@ -61,7 +53,6 @@ Explain:
 Because the calculation is performed within two-level nested loops over matrices A and B, each of size n × n, the initial time complexity is O(N²) due to the outer loops over i and j.
 
 The innermost loop iterates over k from 0 to n, but this step is processed in parallel and independently across different processors. Specifically, each recursive call spawns 8 independent subproblems, each of size N/2. Therefore, the recurrence relation for total work becomes:
-
 $$
 \begin{aligned}
 W(N) = O(N²) + 8 * W(N/2)\\
@@ -70,10 +61,9 @@ W(N)=𝑁^2+2𝑁^2+4𝑁^2+…+8^{log_2⁡𝑛}  (𝑁/2^{log_2⁡𝑛})^2\\
 W(N) = O(N^3)
 \end{aligned}
 $$
-
 Thus, the total work complexity is O(N³).
 
-At each level of the divide step, some tasks must be executed sequentially (for example, adding submatrices), which results in a time complexity of O(log N).
+At each level of the divide step, there are tasks that must be executed sequentially (for example, adding submatrices), which results in a time complexity of O(log N).
 
 After that, the algorithm continues recursively with submatrices of size N/2, leading to the recurrence relation:
 
@@ -81,5 +71,6 @@ $$
 \begin{aligned}
 D(N) = O(logN) + D(N/2)\\
 D(N) = O(log^2N)
+
 \end{aligned}
 $$
