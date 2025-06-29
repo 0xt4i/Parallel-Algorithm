@@ -34,7 +34,9 @@ Explain:
 
 # EXAMPLE
 ![alt](./image.png)
-And compute 8 submatrix product recursively
+
+And compute the 8 submatrix products recursively
+
 $$
 \begin{aligned}
     &Z_{11} = X_{11}Y_{11} + X_{12}Y_{21} \\
@@ -43,6 +45,7 @@ $$
     &Z_{22} = X_{21}Y_{12} + X_{22}Y_{21}
 \end{aligned}
 $$
+
 ![alt](./image2.png)
 
 Explain:
@@ -53,6 +56,7 @@ Explain:
 Because the calculation is performed within two-level nested loops over matrices A and B, each of size n × n, the initial time complexity is O(N²) due to the outer loops over i and j.
 
 The innermost loop iterates over k from 0 to n, but this step is processed in parallel and independently across different processors. Specifically, each recursive call spawns 8 independent subproblems, each of size N/2. Therefore, the recurrence relation for total work becomes:
+
 $$
 \begin{aligned}
 W(N) = O(N²) + 8 * W(N/2)\\
@@ -61,6 +65,7 @@ W(N)=𝑁^2+2𝑁^2+4𝑁^2+…+8^{log_2⁡𝑛}  (𝑁/2^{log_2⁡𝑛})^2\\
 W(N) = O(N^3)
 \end{aligned}
 $$
+
 Thus, the total work complexity is O(N³).
 
 At each level of the divide step, there are tasks that must be executed sequentially (for example, adding submatrices), which results in a time complexity of O(log N).
