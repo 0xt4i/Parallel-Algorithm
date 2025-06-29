@@ -76,6 +76,5 @@ $$
 \begin{aligned}
 D(N) = O(logN) + D(N/2)\\
 D(N) = O(log^2N)
-
 \end{aligned}
 $$
