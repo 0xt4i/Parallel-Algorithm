@@ -35,6 +35,7 @@ Explain:
 
 # EXAMPLE
 ![alt](./image.png)
+
 And compute 8 submatrix products recursively
 
 $$
